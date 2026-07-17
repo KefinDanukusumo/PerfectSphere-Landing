@@ -8,7 +8,7 @@ import { CONTACT_EMAIL, SITE } from "@/lib/site";
 /* Page constants                                                      */
 /* ------------------------------------------------------------------ */
 
-const GALLERY = "https://gallery-perfect-sphere.vercel.app";
+const GALLERY = "/gallery";
 const BUY_SUBJECT = "AIVS acquisition — inquiry";
 const MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(BUY_SUBJECT)}`;
 
@@ -335,7 +335,7 @@ export default function AivsPage() {
                   Browse the full gallery
                 </span>
                 <span className="mt-2 font-mono text-xs text-accent-bright">
-                  gallery-perfect-sphere.vercel.app →
+                  perfectsphere.dev/gallery →
                 </span>
               </a>
             </Reveal>

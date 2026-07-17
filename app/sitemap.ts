@@ -13,5 +13,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    {
+      url: `${SITE.url}/gallery`,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
   ];
 }
