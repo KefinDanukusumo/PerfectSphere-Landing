@@ -9,7 +9,6 @@ import { CONTACT_EMAIL, SITE } from "@/lib/site";
 /* ------------------------------------------------------------------ */
 
 const GALLERY = "https://gallery-perfect-sphere.vercel.app";
-const REPO = "https://github.com/KefinDanukusumo/AIVS";
 const BUY_SUBJECT = "AIVS acquisition — inquiry";
 const MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(BUY_SUBJECT)}`;
 
@@ -416,8 +415,8 @@ export default function AivsPage() {
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <CTA href={MAILTO}>Inquire to buy →</CTA>
-                <CTA href={REPO} variant="ghost">
-                  View the repo
+                <CTA href={GALLERY} variant="ghost">
+                  See it live →
                 </CTA>
               </div>
             </div>
