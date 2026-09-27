@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
-import { SITE } from "@/lib/site";
+import { LINKEDIN_URL, SITE } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -26,15 +26,17 @@ export const metadata: Metadata = {
   title: SITE.title,
   description: SITE.description,
   applicationName: SITE.name,
-  authors: [{ name: "Jeffrey Leou" }],
+  authors: [{ name: "Kefin Pudi", url: LINKEDIN_URL }],
   keywords: [
-    "AI features",
-    "MVP development",
-    "custom software",
-    "RAG",
-    "AI assistant",
-    "fixed price development",
-    "solo developer",
+    "solar CRM integration",
+    "solar installer software",
+    "HubSpot Aurora Solar integration",
+    "JobNimbus integration",
+    "GoHighLevel solar",
+    "GoodLeap CRM sync",
+    "home improvement CRM",
+    "roofing CRM integration",
+    "CRM automation",
   ],
   alternates: { canonical: "/" },
   openGraph: {

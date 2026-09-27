@@ -14,10 +14,10 @@
   --color-muted: #969caa;
   --color-faint: #5f6672;
 
-  /* Single restrained accent — electric iris */
-  --color-accent: #8a7cff;
-  --color-accent-bright: #b3a8ff;
-  --color-accent-deep: #5b4bd6;
+  /* Single restrained accent — solar amber */
+  --color-accent: #f5a524;
+  --color-accent-bright: #ffc862;
+  --color-accent-deep: #e0850f;
 
   /* Hairlines */
   --color-line: rgba(255, 255, 255, 0.08);

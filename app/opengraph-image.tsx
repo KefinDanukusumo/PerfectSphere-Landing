@@ -7,7 +7,7 @@ export const contentType = "image/png";
 
 /**
  * Dynamic social card rendered on demand. Mirrors the brand: dark
- * canvas, a lit iris sphere, and the headline. Used for both
+ * canvas, a lit amber sphere, and the headline. Used for both
  * OpenGraph and Twitter (see twitter-image.tsx).
  */
 export default function OpengraphImage() {
@@ -36,7 +36,7 @@ export default function OpengraphImage() {
             height: 760,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle at 38% 30%, #d7d1ff 0%, #9c8dff 20%, #5b4bd6 48%, #1a1633 78%, #07090d 100%)",
+              "radial-gradient(circle at 38% 30%, #fff1c9 0%, #ffc24d 20%, #e0850f 48%, #3a2008 78%, #07090d 100%)",
             opacity: 0.95,
           }}
         />
@@ -48,7 +48,7 @@ export default function OpengraphImage() {
             width: 840,
             height: 840,
             borderRadius: "50%",
-            border: "1px solid rgba(138,124,255,0.35)",
+            border: "1px solid rgba(245,165,36,0.35)",
           }}
         />
 
@@ -59,7 +59,7 @@ export default function OpengraphImage() {
               height: 22,
               borderRadius: "50%",
               background:
-                "radial-gradient(circle at 35% 30%, #d7d1ff, #5b4bd6 70%)",
+                "radial-gradient(circle at 35% 30%, #fff1c9, #e0850f 70%)",
             }}
           />
           <span
@@ -77,29 +77,29 @@ export default function OpengraphImage() {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <span
             style={{
-              color: "#8a7cff",
+              color: "#f5a524",
               fontSize: 24,
               letterSpacing: 3,
               marginBottom: 18,
               fontFamily: "monospace",
             }}
           >
-            // solo engineering studio
+            // crm & integration studio
           </span>
           <span
             style={{
               color: "#ecedf1",
-              fontSize: 74,
+              fontSize: 64,
               fontWeight: 700,
               lineHeight: 1.05,
               maxWidth: 880,
               letterSpacing: -2,
             }}
           >
-            AI features shipped in 5 days.
+            Stop losing jobs between your CRM and everything else.
           </span>
           <span style={{ color: "#969caa", fontSize: 30, marginTop: 26 }}>
-            Fixed scope. Fixed price. perfectsphere.dev
+            For solar & home-improvement teams · perfectsphere.dev
           </span>
         </div>
       </div>

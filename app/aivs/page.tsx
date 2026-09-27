@@ -70,7 +70,7 @@ function CTA({
     "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-200 focus-visible:outline-offset-4";
   const styles =
     variant === "primary"
-      ? "bg-accent text-bg hover:bg-accent-bright hover:-translate-y-0.5 shadow-[0_0_0_1px_rgba(138,124,255,0.35),0_10px_40px_-12px_rgba(138,124,255,0.55)]"
+      ? "bg-accent text-bg hover:bg-accent-bright hover:-translate-y-0.5 shadow-[0_0_0_1px_rgba(245,165,36,0.35),0_10px_40px_-12px_rgba(245,165,36,0.55)]"
       : "border border-line text-fg hover:border-line-strong hover:bg-white/[0.03]";
   const external = href.startsWith("http");
   return (
@@ -196,7 +196,7 @@ export default function AivsPage() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(60% 50% at 70% 30%, rgba(138,124,255,0.10), transparent 70%)",
+              "radial-gradient(60% 50% at 70% 30%, rgba(245,165,36,0.10), transparent 70%)",
           }}
         />
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
@@ -384,17 +384,17 @@ export default function AivsPage() {
               className="pointer-events-none absolute inset-0"
               style={{
                 background:
-                  "radial-gradient(70% 120% at 15% 0%, rgba(138,124,255,0.16), transparent 60%)",
+                  "radial-gradient(70% 120% at 15% 0%, rgba(245,165,36,0.16), transparent 60%)",
               }}
             />
             <div className="relative">
               <Eyebrow>the_deal</Eyebrow>
               <p className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-2">
                 <span className="font-display text-5xl font-semibold tracking-tight text-fg sm:text-6xl">
-                  $12,000
+                  Open to offers
                 </span>
                 <span className="text-muted">
-                  open to a fast-close offer this week
+                  priced buy-vs-build — let's find a fair number
                 </span>
               </p>
               <p className="mt-6 max-w-2xl text-muted">
@@ -461,7 +461,7 @@ export default function AivsPage() {
             </span>
           </a>
           <p className="font-mono text-xs text-faint">
-            {SITE.domain} · built by Jeffrey Leou
+            {SITE.domain} · built by Kefin Pudi
           </p>
         </div>
       </footer>
