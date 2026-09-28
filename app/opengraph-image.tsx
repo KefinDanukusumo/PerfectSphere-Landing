@@ -96,7 +96,7 @@ export default function OpengraphImage() {
               letterSpacing: -2,
             }}
           >
-            We fix revenue leaks between your CRM, Aurora Solar & GoodLeap.
+            We fix revenue leaks between your CRM, Design System & Financing.
           </span>
           <span style={{ color: "#969caa", fontSize: 30, marginTop: 26 }}>
             For solar & home-improvement teams · perfectsphere.dev

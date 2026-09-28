@@ -151,8 +151,8 @@ const ROI_STATS = [
     label: "Cost of a single validated solar lead",
   },
   {
-    figure: "Up to $18K/yr",
-    label: "Lost pipeline from just 3 dropped leads a month",
+    figure: "$18K/yr",
+    label: "Potential lost pipeline from just 3 dropped leads a month",
   },
   {
     figure: "30 days",
@@ -391,8 +391,8 @@ export default function Page() {
             <Reveal delay={60}>
               <h1 className="mt-5 text-balance font-display text-4xl font-semibold leading-[1.04] tracking-tight text-fg sm:text-6xl lg:text-[4.25rem]">
                 We Fix Revenue Leaks Between Your CRM,{" "}
-                <span className="text-accent">Aurora Solar</span> &amp;{" "}
-                <span className="text-accent-bright">GoodLeap</span>
+                <span className="text-accent">Design System</span> &amp;{" "}
+                <span className="text-accent-bright">Financing</span>
               </h1>
             </Reveal>
             <Reveal delay={120}>
@@ -501,9 +501,9 @@ export default function Page() {
               </p>
               <dl className="mt-12 grid gap-8 border-t border-line pt-10 sm:grid-cols-3">
                 {ROI_STATS.map((s) => (
-                  <div key={s.label} className="flex flex-col-reverse gap-2">
+                  <div key={s.label} className="flex flex-col-reverse justify-end gap-2">
                     <dt className="text-sm text-muted">{s.label}</dt>
-                    <dd className="font-display text-4xl font-semibold tracking-tight text-fg tabular-nums">
+                    <dd className="whitespace-nowrap font-display text-3xl font-semibold tracking-tight text-fg tabular-nums lg:text-4xl">
                       {s.figure}
                     </dd>
                   </div>
