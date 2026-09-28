@@ -66,7 +66,7 @@ function Field({
 
 export function LeakCalculator() {
   const [leads, setLeads] = useState(3);
-  const [leadCost, setLeadCost] = useState(350);
+  const [leadCost, setLeadCost] = useState(300);
   const [hours, setHours] = useState(8);
   const [rate, setRate] = useState(35);
 

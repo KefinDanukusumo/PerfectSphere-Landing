@@ -84,7 +84,7 @@ export default function OpengraphImage() {
               fontFamily: "monospace",
             }}
           >
-            // crm & integration studio
+            // revops engineering
           </span>
           <span
             style={{
@@ -96,7 +96,7 @@ export default function OpengraphImage() {
               letterSpacing: -2,
             }}
           >
-            Stop losing jobs between your CRM and everything else.
+            We fix revenue leaks for solar & home-improvement contractors.
           </span>
           <span style={{ color: "#969caa", fontSize: 30, marginTop: 26 }}>
             For solar & home-improvement teams · perfectsphere.dev
