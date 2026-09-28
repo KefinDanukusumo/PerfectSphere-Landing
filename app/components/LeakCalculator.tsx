@@ -8,10 +8,7 @@ import { useId, useState } from "react";
  * Two leaks, both from the sales guide's value-anchoring pitches:
  *   1. Dropped leads  = leads lost / month × cost to acquire a lead
  *   2. Manual rework  = hours re-keying / week × loaded hourly cost
- * Payback is measured against the beta-partner setup fee.
  */
-
-const BETA_SETUP_FEE = 5000;
 
 const usd = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -74,7 +71,6 @@ export function LeakCalculator() {
   const reworkLeak = hours * rate * 52;
   const total = leadLeak + reworkLeak;
   const monthly = total / 12;
-  const paybackMonths = monthly > 0 ? BETA_SETUP_FEE / monthly : Infinity;
 
   return (
     <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
@@ -130,7 +126,7 @@ export function LeakCalculator() {
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(90% 70% at 80% 0%, rgba(245,165,36,0.16), transparent 65%)",
+              "radial-gradient(90% 70% at 80% 0%, rgba(255,183,3,0.16), transparent 65%)",
           }}
         />
         <div className="relative">
@@ -156,19 +152,17 @@ export function LeakCalculator() {
           </dl>
         </div>
         <p className="relative mt-8 text-sm text-muted">
-          {Number.isFinite(paybackMonths) ? (
+          {monthly > 0 ? (
             <>
-              A {usd.format(BETA_SETUP_FEE)} beta-partner setup pays for itself
-              in{" "}
+              That&apos;s{" "}
               <span className="text-accent-bright">
-                ~{Math.max(1, Math.ceil(paybackMonths))}{" "}
-                {Math.ceil(paybackMonths) <= 1 ? "month" : "months"}
-              </span>
-              . And this doesn&apos;t count the $15K–$100K job a dropped lead
-              would have become.
+                {usd.format(monthly)} every month
+              </span>{" "}
+              the sync stays broken — and it doesn&apos;t count the $15K–$100K
+              job a dropped lead would have become.
             </>
           ) : (
-            <>No leak? Lucky you. Most teams find one in the first call.</>
+            <>No leak? Lucky you. Most teams find one in the free audit.</>
           )}
         </p>
       </div>

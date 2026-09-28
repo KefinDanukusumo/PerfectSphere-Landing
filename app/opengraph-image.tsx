@@ -20,7 +20,7 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#07090d",
+          background: "#0B0F19",
           padding: "72px",
           position: "relative",
           fontFamily: "sans-serif",
@@ -36,7 +36,7 @@ export default function OpengraphImage() {
             height: 760,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle at 38% 30%, #fff1c9 0%, #ffc24d 20%, #e0850f 48%, #3a2008 78%, #07090d 100%)",
+              "radial-gradient(circle at 38% 30%, #FFFBE0 0%, #FFEA00 20%, #E08E00 48%, #3A2A04 78%, #0B0F19 100%)",
             opacity: 0.95,
           }}
         />
@@ -48,7 +48,7 @@ export default function OpengraphImage() {
             width: 840,
             height: 840,
             borderRadius: "50%",
-            border: "1px solid rgba(245,165,36,0.35)",
+            border: "1px solid rgba(255,183,3,0.35)",
           }}
         />
 
@@ -59,7 +59,7 @@ export default function OpengraphImage() {
               height: 22,
               borderRadius: "50%",
               background:
-                "radial-gradient(circle at 35% 30%, #fff1c9, #e0850f 70%)",
+                "radial-gradient(circle at 35% 30%, #FFFBE0, #E08E00 70%)",
             }}
           />
           <span
@@ -77,7 +77,7 @@ export default function OpengraphImage() {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <span
             style={{
-              color: "#f5a524",
+              color: "#FFB703",
               fontSize: 24,
               letterSpacing: 3,
               marginBottom: 18,
@@ -96,7 +96,7 @@ export default function OpengraphImage() {
               letterSpacing: -2,
             }}
           >
-            We fix revenue leaks for solar & home-improvement contractors.
+            We fix revenue leaks between your CRM, Aurora Solar & GoodLeap.
           </span>
           <span style={{ color: "#969caa", fontSize: 30, marginTop: 26 }}>
             For solar & home-improvement teams · perfectsphere.dev

@@ -120,7 +120,7 @@ export default function GalleryPage() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(60% 50% at 70% 20%, rgba(245,165,36,0.10), transparent 70%)",
+              "radial-gradient(60% 50% at 70% 20%, rgba(255,183,3,0.10), transparent 70%)",
           }}
         />
         <Reveal>
@@ -160,7 +160,7 @@ export default function GalleryPage() {
                     className="absolute inset-0"
                     style={{
                       background:
-                        "radial-gradient(80% 80% at 50% 30%, rgba(245,165,36,0.14), transparent 70%)",
+                        "radial-gradient(80% 80% at 50% 30%, rgba(255,183,3,0.14), transparent 70%)",
                     }}
                   />
                   <span className="relative font-mono text-xs uppercase tracking-[0.2em] text-accent/90">

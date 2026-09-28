@@ -23,18 +23,18 @@ export function Sphere({ className }: { className?: string }) {
       <defs>
         {/* Lit body: highlight upper-left → iris mid → near-black edge */}
         <radialGradient id="ps-body" cx="38%" cy="30%" r="80%">
-          <stop offset="0%" stopColor="#fff1c9" />
-          <stop offset="22%" stopColor="#ffc24d" />
-          <stop offset="52%" stopColor="#e0850f" />
-          <stop offset="82%" stopColor="#3a2008" />
-          <stop offset="100%" stopColor="#0b0806" />
+          <stop offset="0%" stopColor="#FFFBE0" />
+          <stop offset="22%" stopColor="#FFEA00" />
+          <stop offset="52%" stopColor="#E08E00" />
+          <stop offset="82%" stopColor="#3A2A04" />
+          <stop offset="100%" stopColor="#0B0F19" />
         </radialGradient>
 
         {/* Soft outer aura */}
         <radialGradient id="ps-aura" cx="50%" cy="50%" r="50%">
-          <stop offset="55%" stopColor="#f5a524" stopOpacity="0" />
-          <stop offset="78%" stopColor="#f5a524" stopOpacity="0.18" />
-          <stop offset="100%" stopColor="#f5a524" stopOpacity="0" />
+          <stop offset="55%" stopColor="#FFB703" stopOpacity="0" />
+          <stop offset="78%" stopColor="#FFB703" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="#FFB703" stopOpacity="0" />
         </radialGradient>
 
         <radialGradient id="ps-spec" cx="50%" cy="50%" r="50%">
@@ -61,7 +61,7 @@ export function Sphere({ className }: { className?: string }) {
       <circle cx="200" cy="200" r="150" fill="url(#ps-body)" />
 
       {/* Wireframe, clipped to the sphere */}
-      <g clipPath="url(#ps-clip)" fill="none" stroke="#ffc862">
+      <g clipPath="url(#ps-clip)" fill="none" stroke="#FFEA00">
         <g strokeOpacity="0.16" strokeWidth="1">
           {parallels.map((dy) => {
             // Parallels narrow as they near the poles for a globe feel.
@@ -91,7 +91,7 @@ export function Sphere({ className }: { className?: string }) {
         cy="200"
         r="150"
         fill="none"
-        stroke="#ffc862"
+        stroke="#FFEA00"
         strokeOpacity="0.22"
         strokeWidth="1"
       />
@@ -115,11 +115,11 @@ export function Sphere({ className }: { className?: string }) {
             rx="190"
             ry="62"
             fill="none"
-            stroke="#f5a524"
+            stroke="#FFB703"
             strokeOpacity="0.45"
             strokeWidth="1"
           />
-          <circle cx="390" cy="200" r="3.5" fill="#ffc862" />
+          <circle cx="390" cy="200" r="3.5" fill="#FFEA00" />
         </g>
       </g>
     </svg>

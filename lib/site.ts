@@ -18,7 +18,7 @@ export const SITE = {
   name: "Perfect Sphere",
   domain: "perfectsphere.dev",
   url: "https://perfectsphere.dev",
-  title: "Perfect Sphere — We fix revenue leaks for solar & home-improvement contractors",
+  title: "Perfect Sphere — We fix revenue leaks between your CRM, Aurora Solar & GoodLeap",
   description:
-    "We fix revenue leaks for US solar & home-improvement contractors: leak-proof two-way syncs between your CRM, Aurora Solar, and GoodLeap. Setup + managed sync, monitored 24/7.",
+    "A specialized RevOps engineering squad for US solar & home-improvement contractors. Leak-proof, two-way API integrations that eliminate manual data re-keying and prevent dropped leads — 24/7.",
 } as const;

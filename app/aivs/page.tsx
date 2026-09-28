@@ -70,7 +70,7 @@ function CTA({
     "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-200 focus-visible:outline-offset-4";
   const styles =
     variant === "primary"
-      ? "bg-accent text-bg hover:bg-accent-bright hover:-translate-y-0.5 shadow-[0_0_0_1px_rgba(245,165,36,0.35),0_10px_40px_-12px_rgba(245,165,36,0.55)]"
+      ? "bg-accent text-bg hover:bg-accent-bright hover:-translate-y-0.5 shadow-[0_0_0_1px_rgba(255,183,3,0.35),0_10px_40px_-12px_rgba(255,183,3,0.55)]"
       : "border border-line text-fg hover:border-line-strong hover:bg-white/[0.03]";
   const external = href.startsWith("http");
   return (
@@ -196,7 +196,7 @@ export default function AivsPage() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(60% 50% at 70% 30%, rgba(245,165,36,0.10), transparent 70%)",
+              "radial-gradient(60% 50% at 70% 30%, rgba(255,183,3,0.10), transparent 70%)",
           }}
         />
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
@@ -384,7 +384,7 @@ export default function AivsPage() {
               className="pointer-events-none absolute inset-0"
               style={{
                 background:
-                  "radial-gradient(70% 120% at 15% 0%, rgba(245,165,36,0.16), transparent 60%)",
+                  "radial-gradient(70% 120% at 15% 0%, rgba(255,183,3,0.16), transparent 60%)",
               }}
             />
             <div className="relative">

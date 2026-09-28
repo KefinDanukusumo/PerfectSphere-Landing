@@ -2,13 +2,7 @@ import type { ReactNode } from "react";
 import { Sphere } from "./components/Sphere";
 import { Reveal } from "./components/Reveal";
 import { LeakCalculator } from "./components/LeakCalculator";
-import {
-  CAL_LINK,
-  CONTACT_EMAIL,
-  LINKEDIN_URL,
-  PRODUCT_NAME,
-  SITE,
-} from "@/lib/site";
+import { CONTACT_EMAIL, LINKEDIN_URL, PRODUCT_NAME, SITE } from "@/lib/site";
 
 /* ------------------------------------------------------------------ */
 /* Small, page-local building blocks                                   */
@@ -23,36 +17,47 @@ function Eyebrow({ children }: { children: ReactNode }) {
   );
 }
 
-function BookCall({
+// Both CTAs are asynchronous on purpose: busy solar execs get a written
+// / recorded deliverable, never a meeting request.
+function mailto(subject: string, body: string) {
+  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+    subject,
+  )}&body=${encodeURIComponent(body)}`;
+}
+
+const AUDIT_MAILTO = mailto(
+  "pipeline leak audit request",
+  "Company:\nCRM we use:\nDesign / finance / field tools:\nWhere things break today:\n",
+);
+
+const BLUEPRINT_MAILTO = mailto(
+  "integration blueprint request",
+  "Company:\nStates / markets we serve:\nInstalls per year (approx.):\nCRM, design, finance and field tools:\nWhat we want connected:\n",
+);
+
+function Cta({
+  kind = "audit",
   variant = "primary",
-  children,
   className = "",
 }: {
+  kind?: "audit" | "blueprint";
   variant?: "primary" | "ghost";
-  children: ReactNode;
   className?: string;
 }) {
   const base =
     "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-200 focus-visible:outline-offset-4";
   const styles =
     variant === "primary"
-      ? "bg-accent text-bg hover:bg-accent-bright hover:-translate-y-0.5 shadow-[0_0_0_1px_rgba(245,165,36,0.35),0_10px_40px_-12px_rgba(245,165,36,0.55)]"
-      : "border border-line text-fg hover:border-line-strong hover:bg-white/[0.03]";
-  // Booking links all read from the single CAL_LINK constant in lib/site.ts.
-  return (
-    <a href={CAL_LINK} className={`${base} ${styles} ${className}`}>
-      {children}
-    </a>
-  );
-}
-
-function AuditCta({ className = "" }: { className?: string }) {
+      ? "bg-accent text-bg hover:bg-accent-bright hover:-translate-y-0.5 shadow-[0_0_0_1px_rgba(255,183,3,0.35),0_10px_40px_-12px_rgba(255,183,3,0.55)]"
+      : "border border-line text-fg hover:border-accent/50 hover:bg-white/[0.03]";
   return (
     <a
-      href={AUDIT_MAILTO}
-      className={`inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-bg shadow-[0_0_0_1px_rgba(245,165,36,0.35),0_10px_40px_-12px_rgba(245,165,36,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-bright focus-visible:outline-offset-4 ${className}`}
+      href={kind === "audit" ? AUDIT_MAILTO : BLUEPRINT_MAILTO}
+      className={`${base} ${styles} ${className}`}
     >
-      Request a free 2-minute leak audit →
+      {kind === "audit"
+        ? "Request a Free 2-Min Pipeline Leak Audit →"
+        : "Get a Custom Integration Blueprint"}
     </a>
   );
 }
@@ -74,12 +79,17 @@ function Dot() {
   );
 }
 
-// Low-friction ask from the playbook: an async audit, not a call.
-const AUDIT_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-  "pipeline leak audit request",
-)}&body=${encodeURIComponent(
-  "Company:\nCRM we use:\nDesign / finance / field tools:\nWhere things break today:\n",
-)}`;
+function Glow({ at = "15% 0%" }: { at?: string }) {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0"
+      style={{
+        background: `radial-gradient(70% 120% at ${at}, rgba(255,183,3,0.14), transparent 60%)`,
+      }}
+    />
+  );
+}
 
 /* ------------------------------------------------------------------ */
 /* Content                                                             */
@@ -87,47 +97,66 @@ const AUDIT_MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
 
 const NAV = [
   { href: "#leaks", label: "The leaks" },
+  { href: "#roi", label: "ROI" },
+  { href: "#solutions", label: "Solutions" },
   { href: "#async", label: "How we work" },
-  { href: "#services", label: "Services" },
-  { href: "#pricing", label: "Pricing" },
   { href: "#faq", label: "FAQ" },
 ];
 
-// Text wordmarks, not official logos: we integrate with these, we are
-// not their certified partners.
-const INTEGRATIONS = [
+// Text badges, not official logos: we integrate with these platforms,
+// we are not their certified partners.
+const PLATFORMS = [
   "HubSpot",
   "Salesforce",
   "JobNimbus",
   "Aurora Solar",
   "GoodLeap",
   "Solo",
-  "LightReach",
-  "Concert",
 ];
 
-const STACK = [
-  { group: "CRM", tools: ["HubSpot", "Salesforce", "GoHighLevel", "JobNimbus", "Zoho", "AccuLynx"] },
-  { group: "Design", tools: ["Aurora Solar", "Solo", "OpenSolar", "EagleView"] },
-  { group: "Finance", tools: ["GoodLeap", "LightReach", "Mosaic", "Concert"] },
-  { group: "Field & PM", tools: ["CompanyCam", "SiteCapture", "Monday.com", "Asana"] },
+const ALSO_WORKS_WITH = [
+  "GoHighLevel",
+  "Zoho",
+  "AccuLynx",
+  "OpenSolar",
+  "EagleView",
+  "LightReach",
+  "Mosaic",
+  "CompanyCam",
+  "SiteCapture",
+  "Monday.com",
 ];
 
 const LEAKS = [
   {
     gap: "Sales → Design",
-    pain: "Reps re-key names, addresses, utility bills, and roof details from the CRM into Aurora Solar — or whatever design tool you run. Typos become redesigns.",
-    fix: "New deal in the CRM creates the design project automatically. System size, price, and proposal link sync back to the deal.",
+    pain: "Reps re-key names, addresses, utility bills, and roof details from the CRM into Aurora Solar. Typos become redesigns.",
+    fix: "A new deal in the CRM creates the design project automatically. System size, price, and proposal link sync back to the deal.",
   },
   {
     gap: "Sales → Finance",
-    pain: "Loan approvals from GoodLeap or Mosaic sit in a lender portal. Nobody knows a deal is funded until someone logs in and checks.",
+    pain: "GoodLeap approvals sit in a lender portal. Nobody knows a deal is funded until someone logs in and checks.",
     fix: "Credit decisions, stips, and funding milestones write straight to the deal stage — and ping the rep the minute they change.",
   },
   {
     gap: "Field → Office",
-    pain: "Site-survey photos and install checklists live in someone's email or camera roll instead of the customer's record.",
-    fix: "Photos and forms from CompanyCam or SiteCapture land in the right customer folder, tagged by job and stage.",
+    pain: "Site-survey photos and install checklists live in someone's email or camera roll instead of the customer record.",
+    fix: "Photos and forms from the field land in the right customer folder, tagged by job and stage.",
+  },
+];
+
+const ROI_STATS = [
+  {
+    figure: "$300–$500",
+    label: "Cost of a single validated solar lead",
+  },
+  {
+    figure: "Up to $18K/yr",
+    label: "Lost pipeline from just 3 dropped leads a month",
+  },
+  {
+    figure: "30 days",
+    label: "For our builds to pay for themselves",
   },
 ];
 
@@ -162,7 +191,7 @@ const SERVICES = [
     blurb:
       "The managed layer that keeps it all running. APIs change, lenders update portals, you add a new tool — the sync keeps working.",
     points: [
-      "24/7 sync monitoring and failure alerts",
+      "24/7 queue monitoring and failure alerts",
       "Mapping updates when your process changes",
       "Monthly data-health report",
       "Morning report of everything fixed overnight",
@@ -170,16 +199,63 @@ const SERVICES = [
   },
 ];
 
+const CORE_DELIVERABLES = [
+  {
+    title: "2-Way CRM Sync",
+    body: "HubSpot, Salesforce, or JobNimbus stays the single source of truth — every tool reads from it and writes back to it.",
+  },
+  {
+    title: "Automated Design Triggers",
+    body: "Deal stage changes spin up Aurora Solar or Solo projects with the customer, site, and usage data already filled in.",
+  },
+  {
+    title: "GoodLeap Financing Webhooks",
+    body: "Approvals, stips, and funding milestones update the deal the moment they happen — no more portal checking.",
+  },
+  {
+    title: "24/7 Queue Monitoring",
+    body: "Every sync is watched around the clock. Failed records are retried, flagged, and cleared overnight.",
+  },
+];
+
+const SCALES = [
+  {
+    name: "Small & Regional Installers",
+    who: "Owner-led or single-region teams · 1–10 crews",
+    intro:
+      "Get the core leaks closed fast, without hiring an ops or IT person to babysit the stack.",
+    extras: [
+      "One CRM, one design tool, one lender — done right",
+      "Pre-built mappings for common solar stacks",
+      "Plain-English runbook for your office manager",
+    ],
+    featured: false,
+  },
+  {
+    name: "Multi-State Enterprise Contractors",
+    who: "Multi-office, multi-market operations · VP Ops, COO, IT",
+    intro:
+      "Standardize data across every office and market, and clear IT's integration backlog for good.",
+    extras: [
+      "Per-state and per-office routing rules",
+      "Multiple lenders, design tools, and field apps",
+      "API security review and least-privilege access",
+      "Data warehouse and BI feeds",
+    ],
+    featured: true,
+  },
+];
+
 const STEPS = [
   {
     n: "01",
     title: "Free leak audit",
-    body: "Send us your tools and where things break. You get a 2-minute video and a one-page PDF mapping your leaks — free, no call required.",
+    body: "Send us your tools and where things break. You get a 2-minute video and a one-page PDF mapping your leaks — no call required.",
   },
   {
     n: "02",
-    title: "Map & price",
-    body: "We agree on exactly which fields move where. You get a fixed setup price tied to the value it protects, not to hours.",
+    title: "Integration blueprint",
+    body: "We send a custom blueprint: exactly which fields move where, what gets automated, the timeline, and a fixed quote.",
   },
   {
     n: "03",
@@ -190,77 +266,6 @@ const STEPS = [
     n: "04",
     title: "Go live & monitor",
     body: `We switch it on, your team gets a walkthrough, and ${PRODUCT_NAME} watches every sync from then on.`,
-  },
-];
-
-const TIERS = [
-  {
-    name: "Small installer",
-    who: "1–5 crews · owner or ops manager",
-    setup: "$3K–$6K",
-    recurring: "from $100/mo",
-    points: [
-      "One core integration (e.g. CRM ↔ design)",
-      "Stops sales-to-field errors",
-      "Frees the owner's evenings",
-    ],
-  },
-  {
-    name: "Mid-market",
-    who: "50–500 installs/yr · VP Ops or IT",
-    setup: "$10K–$20K",
-    recurring: "from $300/mo",
-    featured: true,
-    points: [
-      "CRM ↔ design ↔ finance ↔ field",
-      "Kills manual double-entry across teams",
-      "Multi-office and multi-market ready",
-    ],
-  },
-  {
-    name: "Enterprise",
-    who: "500+ installs/yr · COO or CTO",
-    setup: "from $25K",
-    recurring: "from $1,000/mo",
-    points: [
-      "Custom integrations and data warehouse feeds",
-      "API security review and access controls",
-      "Clears IT's integration backlog",
-    ],
-  },
-];
-
-const INDUSTRIES = [
-  "Residential solar",
-  "Commercial solar",
-  "Battery & EV chargers",
-  "Roofing",
-  "HVAC",
-  "Windows & siding",
-  "Remodeling",
-];
-
-const PRINCIPLES = [
-  "The engineer who scopes it builds it",
-  "Priced on value, not hours",
-  "You own the mapping and the data",
-];
-
-const LEAK_MATH = [
-  {
-    figure: "$300",
-    label: "Average cost to acquire one solar lead",
-    note: "Most installers pay $200–$500 per validated lead.",
-  },
-  {
-    figure: "$10,800/yr",
-    label: "Burned by just 3 dropped leads a month",
-    note: "3 × $300 × 12 — before counting the $15K–$100K jobs they'd have become.",
-  },
-  {
-    figure: "0",
-    label: "Fields re-keyed between your CRM and Aurora Solar",
-    note: "HubSpot or Salesforce deals flow into design and back, automatically.",
   },
 ];
 
@@ -283,18 +288,38 @@ const ASYNC_POINTS = [
   },
 ];
 
+const INDUSTRIES = [
+  "Residential solar",
+  "Commercial solar",
+  "Battery & EV chargers",
+  "Roofing",
+  "HVAC",
+  "Windows & siding",
+  "Remodeling",
+];
+
+const PRINCIPLES = [
+  "The engineer who scopes it builds it",
+  "Priced on value, not hours",
+  "You own the mapping and the data",
+];
+
 const FAQ = [
   {
     q: "We already have someone handling this manually.",
-    a: "Most teams do. Run their hours through the calculator above. The question isn't whether they can keep copying data, it's whether that's the best use of a $35–$60/hr ops person, and how many leads slip through when they're out sick.",
+    a: "Most teams do. Run their hours through the calculator above. The question isn't whether they can keep copying data, it's whether that's the best use of an ops person's week, and how many leads slip through when they're out sick.",
+  },
+  {
+    q: "How much does it cost?",
+    a: `Every engagement is a fixed one-time build plus a monthly ${PRODUCT_NAME} subscription, sized to your stack and install volume. Your custom integration blueprint includes the exact number before you commit to anything.`,
   },
   {
     q: "Which CRMs and tools do you work with?",
-    a: "HubSpot, Salesforce, GoHighLevel, JobNimbus, Zoho, and AccuLynx are the most common, alongside Aurora Solar, OpenSolar, GoodLeap, Mosaic, CompanyCam, and SiteCapture. If your tool has an API or webhooks, it can almost always be connected.",
+    a: "HubSpot, Salesforce, JobNimbus, Aurora Solar, GoodLeap, and Solo are the core stack, alongside GoHighLevel, Zoho, AccuLynx, OpenSolar, LightReach, Mosaic, CompanyCam, and SiteCapture. If a tool has an API or webhooks, it can almost always be connected.",
   },
   {
     q: "How long does a build take?",
-    a: "Most single integrations go live in two to four weeks from the signed mapping doc. Multi-tool builds for mid-market teams usually take four to eight. You get a firm date before you pay anything.",
+    a: "Most single integrations go live in two to four weeks from the signed blueprint. Multi-state builds usually take four to eight. You get a firm date in the blueprint.",
   },
   {
     q: "What happens if a vendor changes their API?",
@@ -303,10 +328,6 @@ const FAQ = [
   {
     q: "Is our customer data safe?",
     a: "Integrations run on scoped API keys with least-privilege access, credentials stay encrypted, and nothing is stored that doesn't need to be. Enterprise builds include a security review your IT team can sign off on.",
-  },
-  {
-    q: "Who actually does the work?",
-    a: "Perfect Sphere is deliberately lean. The engineer who scopes your integration is the one who builds and maintains it — no account managers relaying messages, no junior hand-offs, and no retainers padded to cover an office.",
   },
 ];
 
@@ -318,7 +339,7 @@ export default function Page() {
   return (
     <div className="relative overflow-x-clip">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-line/60 bg-bg/70 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-line/60 bg-bg/75 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
           <a href="#top" className="group flex items-center gap-2.5">
             <Sphere className="h-7 w-7" />
@@ -359,39 +380,36 @@ export default function Page() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(60% 50% at 75% 30%, rgba(245,165,36,0.10), transparent 70%)",
+              "radial-gradient(60% 50% at 75% 30%, rgba(255,183,3,0.10), transparent 70%)",
           }}
         />
-        <div className="grid items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.25fr_0.75fr]">
           <div>
             <Reveal>
-              <Eyebrow>revops engineering for solar + home improvement</Eyebrow>
+              <Eyebrow>revops engineering for us solar + home improvement</Eyebrow>
             </Reveal>
             <Reveal delay={60}>
-              <h1 className="mt-5 text-balance font-display text-5xl font-semibold leading-[1.02] tracking-tight text-fg sm:text-6xl lg:text-7xl">
-                We fix revenue leaks for US solar &amp; home-improvement
-                contractors.
+              <h1 className="mt-5 text-balance font-display text-4xl font-semibold leading-[1.04] tracking-tight text-fg sm:text-6xl lg:text-[4.25rem]">
+                We Fix Revenue Leaks Between Your CRM,{" "}
+                <span className="text-accent">Aurora Solar</span> &amp;{" "}
+                <span className="text-accent-bright">GoodLeap</span>
               </h1>
             </Reveal>
             <Reveal delay={120}>
-              <p className="mt-6 max-w-xl text-balance text-lg text-muted sm:text-xl">
-                We build leak-proof, two-way syncs between your CRM, Aurora
-                Solar, and GoodLeap —{" "}
+              <p className="mt-6 max-w-2xl text-balance text-lg text-muted sm:text-xl">
+                Perfect Sphere is a specialized RevOps engineering squad. We
+                build{" "}
                 <span className="text-fg">
-                  so reps stop re-keying data and no lead gets dropped.
-                </span>
+                  leak-proof, two-way API integrations
+                </span>{" "}
+                that eliminate manual data re-keying and prevent dropped
+                leads — 24/7.
               </p>
             </Reveal>
             <Reveal delay={180}>
-              <p className="mt-4 max-w-xl text-base text-faint">
-                One-time setup, then a managed sync monitored 24/7 and
-                maintained overnight while your team sleeps.
-              </p>
-            </Reveal>
-            <Reveal delay={240}>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <AuditCta />
-                <BookCall variant="ghost">Or book a 15-min call</BookCall>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                <Cta />
+                <Cta kind="blueprint" variant="ghost" />
               </div>
               <p className="mt-3 font-mono text-[11px] uppercase tracking-widest text-faint">
                 PDF + video · no call required
@@ -400,40 +418,29 @@ export default function Page() {
           </div>
 
           <div className="order-first lg:order-last">
-            <Sphere className="mx-auto h-56 w-56 sm:h-72 sm:w-72 lg:h-[24rem] lg:w-[24rem]" />
+            <Sphere className="mx-auto h-52 w-52 sm:h-72 sm:w-72 lg:h-[22rem] lg:w-[22rem]" />
           </div>
         </div>
 
-        {/* Stack strip */}
-        <Reveal delay={300} className="mt-20">
+        {/* Supported platforms */}
+        <Reveal delay={240} className="mt-16">
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-faint">
-            Integrates with
+            Supported platforms
           </p>
-          <ul className="mt-5 flex flex-wrap items-center gap-x-9 gap-y-4 border-y border-line py-6">
-            {INTEGRATIONS.map((name) => (
+          <ul className="mt-5 flex flex-wrap gap-3">
+            {PLATFORMS.map((name) => (
               <li
                 key={name}
-                className="font-display text-xl font-semibold tracking-tight text-fg/70 sm:text-2xl"
+                className="rounded-full border border-accent/30 bg-accent/[0.06] px-5 py-2 font-display text-base font-semibold tracking-tight text-fg sm:text-lg"
               >
                 {name}
               </li>
             ))}
           </ul>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {STACK.map((s) => (
-              <div
-                key={s.group}
-                className="rounded-xl border border-line bg-surface/40 px-4 py-3"
-              >
-                <p className="font-mono text-[10px] uppercase tracking-widest text-accent">
-                  {s.group}
-                </p>
-                <p className="mt-1.5 text-sm text-fg/80">
-                  {s.tools.join(" · ")}
-                </p>
-              </div>
-            ))}
-          </div>
+          <p className="mt-4 text-sm text-faint">
+            Also works with {ALSO_WORKS_WITH.join(", ")}, and most tools with
+            an API or webhooks.
+          </p>
         </Reveal>
       </section>
 
@@ -475,43 +482,41 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Leak math */}
-      <section className="border-t border-line">
+      {/* ROI */}
+      <section id="roi" className="scroll-mt-20 border-t border-line">
         <div className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
-          <Reveal>
-            <Eyebrow>the_math</Eyebrow>
-            <SectionHeading>What one broken sync actually costs.</SectionHeading>
+          <Reveal className="relative overflow-hidden rounded-3xl border border-accent/30 bg-surface p-8 sm:p-14">
+            <Glow />
+            <div className="relative">
+              <Eyebrow>the_roi_math</Eyebrow>
+              <p className="mt-6 max-w-4xl text-balance font-display text-2xl font-semibold leading-snug tracking-tight text-fg sm:text-4xl">
+                A single validated solar lead costs{" "}
+                <span className="text-accent-bright">$300–$500</span>.
+                Dropping just 3 leads a month to broken CRM syncs costs you up
+                to <span className="text-accent-bright">$18,000 a year</span>{" "}
+                in lost pipeline.
+              </p>
+              <p className="mt-5 font-mono text-sm text-accent">
+                Our builds pay for themselves in 30 days.
+              </p>
+              <dl className="mt-12 grid gap-8 border-t border-line pt-10 sm:grid-cols-3">
+                {ROI_STATS.map((s) => (
+                  <div key={s.label} className="flex flex-col-reverse gap-2">
+                    <dt className="text-sm text-muted">{s.label}</dt>
+                    <dd className="font-display text-4xl font-semibold tracking-tight text-fg tabular-nums">
+                      {s.figure}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </Reveal>
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {LEAK_MATH.map((m, i) => (
-              <Reveal
-                key={m.label}
-                delay={i * 80}
-                className="rounded-2xl border border-line bg-surface p-8"
-              >
-                <p className="font-display text-5xl font-semibold tracking-tight text-accent-bright tabular-nums">
-                  {m.figure}
-                </p>
-                <p className="mt-4 font-medium text-fg">{m.label}</p>
-                <p className="mt-2 text-sm text-muted">{m.note}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Calculator */}
-      <section id="calculator" className="scroll-mt-20 border-t border-line">
-        <div className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
-          <Reveal>
-            <Eyebrow>what_it_costs_you</Eyebrow>
-            <SectionHeading>Put a number on the leak.</SectionHeading>
-            <p className="mt-4 max-w-2xl text-muted">
-              The figures above are a typical installer. Plug in your own
-              numbers.
-            </p>
+          <Reveal className="mt-16">
+            <Eyebrow>your_numbers</Eyebrow>
+            <SectionHeading>Put a number on your own leak.</SectionHeading>
           </Reveal>
-          <Reveal delay={80} className="mt-12">
+          <Reveal delay={80} className="mt-10">
             <LeakCalculator />
           </Reveal>
         </div>
@@ -568,12 +573,106 @@ export default function Page() {
         </div>
       </section>
 
+      {/* Solutions by scale */}
+      <section id="solutions" className="scroll-mt-20 border-t border-line">
+        <div className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
+          <Reveal>
+            <Eyebrow>solutions_by_scale</Eyebrow>
+            <SectionHeading>
+              The same leak-proof core, sized to how you operate.
+            </SectionHeading>
+          </Reveal>
+
+          {/* Core deliverables every client gets */}
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {CORE_DELIVERABLES.map((d, i) => (
+              <Reveal
+                key={d.title}
+                delay={i * 60}
+                className="rounded-2xl border border-line bg-surface/40 p-6"
+              >
+                <span className="font-mono text-sm text-accent">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-3 font-display text-base font-semibold text-fg">
+                  {d.title}
+                </h3>
+                <p className="mt-2 text-sm text-muted">{d.body}</p>
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="mt-8 grid gap-5 lg:grid-cols-2">
+            {SCALES.map((t, i) => (
+              <Reveal
+                key={t.name}
+                delay={i * 80}
+                className={`relative flex flex-col overflow-hidden rounded-2xl border p-8 sm:p-10 ${
+                  t.featured
+                    ? "border-accent/40 bg-surface-2"
+                    : "border-line bg-surface"
+                }`}
+              >
+                {t.featured && <Glow at="100% 0%" />}
+                <div className="relative flex flex-1 flex-col">
+                  <h3 className="font-display text-2xl font-semibold tracking-tight text-fg">
+                    {t.name}
+                  </h3>
+                  <p className="mt-2 font-mono text-xs uppercase tracking-wider text-faint">
+                    {t.who}
+                  </p>
+                  <p className="mt-5 text-muted">{t.intro}</p>
+
+                  <p className="mt-8 font-mono text-[10px] uppercase tracking-widest text-accent">
+                    Included
+                  </p>
+                  <ul className="mt-3 flex flex-wrap gap-2">
+                    {CORE_DELIVERABLES.map((d) => (
+                      <li
+                        key={d.title}
+                        className="rounded-full border border-accent/30 bg-accent/[0.06] px-3 py-1 text-xs text-fg"
+                      >
+                        {d.title}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <p className="mt-7 font-mono text-[10px] uppercase tracking-widest text-faint">
+                    Built for your scale
+                  </p>
+                  <ul className="mt-3 space-y-3">
+                    {t.extras.map((p) => (
+                      <li
+                        key={p}
+                        className="flex items-start gap-3 text-sm text-fg/90"
+                      >
+                        <Dot />
+                        {p}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-auto pt-10">
+                    <Cta
+                      kind="blueprint"
+                      variant={t.featured ? "primary" : "ghost"}
+                    />
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* How it works */}
       <section className="border-t border-line">
         <div className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
           <Reveal>
             <Eyebrow>how_it_works</Eyebrow>
-            <SectionHeading>From messy stack to clean sync in four steps.</SectionHeading>
+            <SectionHeading>
+              From messy stack to clean sync in four steps.
+            </SectionHeading>
           </Reveal>
           <ol className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {STEPS.map((step, i) => (
@@ -626,93 +725,26 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Pricing */}
-      <section id="pricing" className="scroll-mt-20 border-t border-line">
+      {/* Beta partner program */}
+      <section className="border-t border-line">
         <div className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
-          <Reveal>
-            <Eyebrow>pricing</Eyebrow>
-            <SectionHeading>
-              A one-time setup, plus {PRODUCT_NAME} to keep it healthy.
-            </SectionHeading>
-            <p className="mt-4 max-w-2xl text-muted">
-              Priced against the leads and hours you&apos;re protecting, not
-              against build time. Every quote is fixed before work starts.
-            </p>
-          </Reveal>
-
-          <div className="mt-12 grid gap-5 lg:grid-cols-3">
-            {TIERS.map((t, i) => (
-              <Reveal
-                key={t.name}
-                delay={i * 80}
-                className={`flex flex-col rounded-2xl border p-8 ${
-                  t.featured
-                    ? "border-accent/40 bg-surface-2"
-                    : "border-line bg-surface"
-                }`}
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <h3 className="font-display text-xl font-semibold text-fg">
-                    {t.name}
-                  </h3>
-                  {t.featured && (
-                    <span className="rounded-full border border-accent/40 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-accent">
-                      Most common
-                    </span>
-                  )}
-                </div>
-                <p className="mt-2 text-sm text-faint">{t.who}</p>
-                <div className="mt-7 space-y-1">
-                  <p className="font-display text-3xl font-semibold tracking-tight text-fg">
-                    {t.setup}
-                    <span className="ml-2 text-sm font-normal text-muted">
-                      setup
-                    </span>
-                  </p>
-                  <p className="font-mono text-sm text-accent-bright">
-                    + {t.recurring} {PRODUCT_NAME}
-                  </p>
-                </div>
-                <ul className="mt-7 space-y-3">
-                  {t.points.map((p) => (
-                    <li
-                      key={p}
-                      className="flex items-start gap-3 text-sm text-fg/90"
-                    >
-                      <Dot />
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-            ))}
-          </div>
-
-          {/* Beta partner offer */}
-          <Reveal className="relative mt-8 overflow-hidden rounded-3xl border border-accent/30 bg-surface p-8 sm:p-12">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(70% 120% at 15% 0%, rgba(245,165,36,0.16), transparent 60%)",
-              }}
-            />
-            <div className="relative grid items-center gap-8 lg:grid-cols-[1.4fr_0.6fr]">
+          <Reveal className="relative overflow-hidden rounded-3xl border border-accent/30 bg-surface p-8 sm:p-12">
+            <Glow />
+            <div className="relative grid items-center gap-8 lg:grid-cols-[1.3fr_0.7fr]">
               <div>
                 <Eyebrow>beta_partner_program · 3 spots</Eyebrow>
                 <p className="mt-5 text-balance font-display text-2xl font-semibold leading-tight tracking-tight text-fg sm:text-3xl">
-                  Flat $5,000 setup. {PRODUCT_NAME} free for 3 months, then
-                  $250/mo.
+                  Founding-partner terms for three installers.
                 </p>
                 <p className="mt-4 max-w-2xl text-muted">
-                  For mid-market installers willing to let us write up the
-                  results as a case study. Same build, same care — at a
-                  fraction of standard pricing.
+                  For installers willing to let us write up the results as a
+                  case study. Same build, same care, with {PRODUCT_NAME}{" "}
+                  included free for the first months. Details come with your
+                  blueprint.
                 </p>
               </div>
               <div className="flex lg:justify-end">
-                <BookCall>Claim a beta spot →</BookCall>
+                <Cta kind="blueprint" />
               </div>
             </div>
           </Reveal>
@@ -724,7 +756,9 @@ export default function Page() {
         <div className="mx-auto grid max-w-6xl gap-16 px-6 py-24 sm:py-32 lg:grid-cols-2">
           <Reveal>
             <Eyebrow>who_its_for</Eyebrow>
-            <SectionHeading>Solar first. The trades around it, too.</SectionHeading>
+            <SectionHeading>
+              Small to mid-market US contractors. Solar first.
+            </SectionHeading>
             <p className="mt-4 text-muted">
               Any team selling high-ticket jobs where a lead moves through
               sales, design, financing, and a field crew — and gets lost
@@ -743,7 +777,7 @@ export default function Page() {
           </Reveal>
           <Reveal delay={80}>
             <Eyebrow>why_perfect_sphere</Eyebrow>
-            <SectionHeading>You talk to the builder.</SectionHeading>
+            <SectionHeading>You talk to the builders.</SectionHeading>
             <p className="mt-4 text-muted">
               We learn your workflow before we pitch anything. The engineer
               who maps your integration writes it, and is the one who gets
@@ -809,11 +843,13 @@ export default function Page() {
               Tell us your stack. You get a short video and a one-page PDF
               mapping your leaks — no call required.
             </p>
-            <div className="mt-10 flex flex-col items-center gap-5">
-              <AuditCta className="px-8 py-3.5 text-base" />
-              <BookCall variant="ghost">Prefer to talk? Book 15 minutes</BookCall>
+            <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              <Cta className="px-8 py-3.5 text-base" />
+              <Cta kind="blueprint" variant="ghost" />
+            </div>
+            <div className="mt-8 flex items-center justify-center gap-6">
               <a
-                href={AUDIT_MAILTO}
+                href={`mailto:${CONTACT_EMAIL}`}
                 className="font-mono text-sm text-faint transition-colors hover:text-fg"
               >
                 {CONTACT_EMAIL}
@@ -840,9 +876,9 @@ export default function Page() {
               Perfect Sphere
             </span>
           </div>
-          <p className="font-mono text-xs text-faint">
-            {SITE.domain} · CRM &amp; integrations for solar and home
-            improvement · built by{" "}
+          <p className="text-center font-mono text-xs text-faint">
+            {SITE.domain} · RevOps engineering for solar and home improvement
+            · founded by{" "}
             <a
               href={LINKEDIN_URL}
               target="_blank"

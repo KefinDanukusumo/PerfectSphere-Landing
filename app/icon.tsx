@@ -14,7 +14,7 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#07090d",
+          background: "#0B0F19",
         }}
       >
         <div
@@ -23,7 +23,7 @@ export default function Icon() {
             height: 24,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle at 35% 30%, #fff1c9, #f5a524 45%, #4a2a0a 90%)",
+              "radial-gradient(circle at 35% 30%, #FFFBE0, #FFB703 45%, #4A3406 90%)",
           }}
         />
       </div>
